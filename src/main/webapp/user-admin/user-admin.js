@@ -92,7 +92,7 @@
         userService.findAllUsers()
             .then((theUsers) => {
                 users = theUsers
-                renderUsers()
+                renderUsers()``
         })
 
     findAllUsers()
