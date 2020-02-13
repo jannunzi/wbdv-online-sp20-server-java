@@ -1,6 +1,8 @@
 package com.example.wbdvonlinesp20serverjava.controllers;
 
 import com.example.wbdvonlinesp20serverjava.models.Widget;
+import com.example.wbdvonlinesp20serverjava.services.WidgetService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -11,36 +13,33 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "*")
 public class WidgetController {
 
-    List<Widget> widgets = new ArrayList<Widget>();
+    @Autowired
+    WidgetService service;
 
-    {
-        Widget w1 = new Widget();
-        Widget w2 = new Widget();
-        w1.setTitle("Widget 1");
-        w1.setId("123");
-        w1.setType("HEADING");
-        w2.setTitle("Widget 2");
-        w2.setId("234");
-        w2.setType("PARAGRAPH");
-        widgets.add(w1);
-        widgets.add(w2);
+    @PutMapping("/widgets/{wid}")
+    public int updateWidget(@PathVariable("wid") String widgetId,
+                            @RequestBody Widget widget) {
+        return service.updateWidget(widgetId, widget);
     }
 
     @DeleteMapping("/widgets/{wid}")
     public int deleteWidget(@PathVariable("wid") String widgetId) {
-        widgets = widgets.stream()
-                .filter(w -> !w.getId().equals(widgetId)).collect(Collectors.toList());
-        return 1;
+        return service.deleteWidget(widgetId);
     }
 
     @PostMapping("/widgets")
     public Widget createWidget(@RequestBody Widget newWidget) {
-        widgets.add(newWidget);
-        return newWidget;
+        return service.createWidget(newWidget);
     }
 
     @GetMapping("/widgets")
     public List<Widget> findAllWidgets() {
-        return widgets;
+        return service.findAllWidgets();
     }
+
+    @GetMapping("/topics/{tid}/widgets")
+    public List<Widget> findWidgetsForTopic(@PathVariable("tid") String tid) {
+        return service.findWidgetsForTopic(tid);
+    }
+
 }
