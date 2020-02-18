@@ -1,6 +1,7 @@
 package com.example.wbdvonlinesp20serverjava.controllers;
 
 import com.example.wbdvonlinesp20serverjava.models.Widget;
+import com.example.wbdvonlinesp20serverjava.repositories.WidgetRepository;
 import com.example.wbdvonlinesp20serverjava.services.WidgetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,17 +20,17 @@ public class WidgetController {
     @PutMapping("/widgets/{wid}")
     public int updateWidget(@PathVariable("wid") String widgetId,
                             @RequestBody Widget widget) {
-        return service.updateWidget(widgetId, widget);
+        return 1;
     }
 
     @DeleteMapping("/widgets/{wid}")
-    public int deleteWidget(@PathVariable("wid") String widgetId) {
-        return service.deleteWidget(widgetId);
+    public int deleteWidget(@PathVariable("wid") int widgetId) {
+        return 1;
     }
 
     @PostMapping("/widgets")
     public Widget createWidget(@RequestBody Widget newWidget) {
-        return service.createWidget(newWidget);
+        return null;
     }
 
     @GetMapping("/widgets")
@@ -38,7 +39,7 @@ public class WidgetController {
     }
 
     @GetMapping("/topics/{tid}/widgets")
-    public List<Widget> findWidgetsForTopic(@PathVariable("tid") String tid) {
+    public List<Widget> findWidgetsForTopic(@PathVariable("tid") int tid) {
         return service.findWidgetsForTopic(tid);
     }
 

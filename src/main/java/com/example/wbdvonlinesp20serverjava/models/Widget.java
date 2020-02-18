@@ -1,19 +1,30 @@
 package com.example.wbdvonlinesp20serverjava.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "widgets")
 public class Widget {
-    private String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private String title = "New Widget";
     private String type = "HEADING";
     private String text = "New Widget";
     private int size = 2;
-    private String topicId;
 
-    public String getTopicId() {
-        return topicId;
+    @ManyToOne
+    @JsonIgnore
+    private Topic topic;
+
+    public Topic getTopic() {
+        return topic;
     }
 
-    public void setTopicId(String topicId) {
-        this.topicId = topicId;
+    public void setTopic(Topic topic) {
+        this.topic = topic;
     }
 
     public String getText() {
@@ -32,11 +43,11 @@ public class Widget {
         this.size = size;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
