@@ -17,28 +17,55 @@ public class WidgetController {
     @Autowired
     WidgetService service;
 
-    @PutMapping("/widgets/{wid}")
-    public int updateWidget(@PathVariable("wid") String widgetId,
+    @GetMapping("/api/widgets/{wid}/update")
+    public int updateWidgetNotRestfulBad(
+            @PathVariable("wid") int widgetId) {
+        Widget widget = new Widget();
+        widget.setTitle("New and Improved Title");
+        widget.setSize(123);
+        return service.updateWidget(widgetId, widget);
+    }
+
+    @PutMapping("/api/widgets/{wid}")
+    public int updateWidget(@PathVariable("wid") int widgetId,
                             @RequestBody Widget widget) {
-        return 1;
+        return service.updateWidget(widgetId, widget);
     }
 
-    @DeleteMapping("/widgets/{wid}")
+    @GetMapping("/api/widgets/{wid}/delete")
+    public int deleteWidgetNotRestful(@PathVariable("wid") int widgetId) {
+        return service.deleteWidget(widgetId);
+    }
+
+    @DeleteMapping("/api/widgets/{wid}")
     public int deleteWidget(@PathVariable("wid") int widgetId) {
-        return 1;
+        return service.deleteWidget(widgetId);
     }
 
-    @PostMapping("/widgets")
+    @GetMapping("/api/widgets/create")
+    public Widget createWidgetNotRest() {
+        Widget newWidget = new Widget();
+        newWidget.setTitle("Not RESTful");
+        newWidget.setSize(45);
+        return service.createWidget(newWidget);
+    }
+
+    @PostMapping("/api/widgets")
     public Widget createWidget(@RequestBody Widget newWidget) {
-        return null;
+        return service.createWidget(newWidget);
     }
 
-    @GetMapping("/widgets")
+    @GetMapping("/api/widgets")
     public List<Widget> findAllWidgets() {
         return service.findAllWidgets();
     }
 
-    @GetMapping("/topics/{tid}/widgets")
+    @GetMapping("/api/widgets/{widgetId}")
+    public Widget findWidgetById(@PathVariable("widgetId") int wid) {
+        return service.findWidgetById(wid);
+    }
+
+    @GetMapping("/api/topics/{tid}/widgets")
     public List<Widget> findWidgetsForTopic(@PathVariable("tid") int tid) {
         return service.findWidgetsForTopic(tid);
     }

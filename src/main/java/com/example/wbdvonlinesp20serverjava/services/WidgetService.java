@@ -16,22 +16,32 @@ public class WidgetService {
     WidgetRepository widgetRepository;
 
     public int deleteWidget(Integer widgetId) {
+        widgetRepository.deleteById(widgetId);
         return 1;
     }
 
     public Widget createWidget(Widget newWidget) {
-        return newWidget;
+        return widgetRepository.save(newWidget);
+    }
+
+    public int updateWidget(int widgetId, Widget updatedWidget) {
+        Widget oldWidget = widgetRepository.findWidgetById(widgetId);
+        oldWidget.setTitle(updatedWidget.getTitle());
+        oldWidget.setSize(updatedWidget.getSize());
+        widgetRepository.save(oldWidget);
+        return 1;
     }
 
     public List<Widget> findAllWidgets() {
-        return (List<Widget>)widgetRepository.findAll();
+        return widgetRepository.findAllWidgets();
     }
 
     public List<Widget> findWidgetsForTopic(int topicId) {
         return widgetRepository.findWidgetsForTopic(topicId);
     }
 
-    public int updateWidget(String widgetId, Widget updateWidget) {
-        return 0;
+    public Widget findWidgetById(int wid) {
+        return widgetRepository.findWidgetById(wid);
+//        return widgetRepository.findById(wid).get();
     }
 }

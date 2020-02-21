@@ -10,6 +10,7 @@ public class Topic {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String title;
+
     @OneToMany(mappedBy = "topic")
     private List<Widget> widgets;
 
