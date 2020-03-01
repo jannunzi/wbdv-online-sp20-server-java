@@ -2,6 +2,7 @@ package com.example.wbdvonlinesp20serverjava.controllers;
 
 import com.example.wbdvonlinesp20serverjava.models.Widget;
 import com.example.wbdvonlinesp20serverjava.repositories.WidgetRepository;
+import com.example.wbdvonlinesp20serverjava.services.TopicService;
 import com.example.wbdvonlinesp20serverjava.services.WidgetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,9 @@ public class WidgetController {
 
     @Autowired
     WidgetService service;
+
+    @Autowired
+    TopicService topicService;
 
     @GetMapping("/api/widgets/{wid}/update")
     public int updateWidgetNotRestfulBad(
@@ -50,9 +54,12 @@ public class WidgetController {
         return service.createWidget(newWidget);
     }
 
-    @PostMapping("/api/widgets")
-    public Widget createWidget(@RequestBody Widget newWidget) {
-        return service.createWidget(newWidget);
+    @PostMapping("/api/topics/{topicId}/widgets")
+    public Widget createWidget(
+            @PathVariable("topicId") Integer topicId,
+            @RequestBody Widget newWidget) {
+        return topicService.createWidgetForTopic(topicId, newWidget);
+//        return service.createWidget(topicId, newWidget);
     }
 
     @GetMapping("/api/widgets")

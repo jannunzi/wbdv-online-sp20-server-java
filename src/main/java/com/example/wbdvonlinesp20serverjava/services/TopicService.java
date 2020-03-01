@@ -47,4 +47,8 @@ public class TopicService {
         newWidget.setTopic(topic);
         return widgetRepository.save(newWidget);
     }
+
+    public List<Topic> findTopicsForLesson(String lessonId) {
+        return topicRepository.findTopicsForLesson(lessonId);
+    }
 }

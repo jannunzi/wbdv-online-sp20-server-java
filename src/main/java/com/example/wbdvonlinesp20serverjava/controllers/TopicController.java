@@ -10,10 +10,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class TopicController {
 
     @Autowired
     TopicService topicService;
+
+    @PostMapping("/api/lessons/{lid}/topics")
+    public Topic createTopicForLesson(
+            @PathVariable("lid") String lessonId,
+            @RequestBody Topic newTopic
+    ) {
+        newTopic.setLessonId(lessonId);
+        return topicService.createTopic(newTopic);
+    }
 
     // DO NOT USE THIS - ONLY FOR ACADEMIC PURPOSE
     @GetMapping("/api/topics/{tid}/widgets/create")
@@ -25,7 +35,7 @@ public class TopicController {
         return topicService.createWidgetForTopic(tid, newWidget);
     }
 
-    @PostMapping("/api/topics/{tid}/widgets")
+    @PostMapping("/api/topics/{tid}/widgetseee")
     public Widget createWidgetForTopic(
             @PathVariable("tid") Integer tid,
             @RequestBody Widget newWidget) {
@@ -35,5 +45,11 @@ public class TopicController {
     @GetMapping("/api/topics")
     public List<Topic> findAllTopics() {
         return topicService.findAllTopics();
+    }
+
+    @GetMapping("/api/lessons/{lessonId}/topics")
+    public List<Topic> findTopicsForLesson(
+            @PathVariable("lessonId") String lessonId) {
+        return topicService.findTopicsForLesson(lessonId);
     }
 }

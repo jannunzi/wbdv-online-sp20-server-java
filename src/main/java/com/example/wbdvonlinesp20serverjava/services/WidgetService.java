@@ -1,6 +1,8 @@
 package com.example.wbdvonlinesp20serverjava.services;
 
+import com.example.wbdvonlinesp20serverjava.models.Topic;
 import com.example.wbdvonlinesp20serverjava.models.Widget;
+import com.example.wbdvonlinesp20serverjava.repositories.TopicRepository;
 import com.example.wbdvonlinesp20serverjava.repositories.WidgetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,9 @@ public class WidgetService {
 
     @Autowired
     WidgetRepository widgetRepository;
+
+    @Autowired
+    TopicRepository topicRepository;
 
     public int deleteWidget(Integer widgetId) {
         widgetRepository.deleteById(widgetId);
